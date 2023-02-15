@@ -4,10 +4,10 @@ import dividir from "./dividir.mjs";
 import multiplicar from "./multiplicar.mjs";
 
 const operacoes = {
-    somar: somar,
-    subtrair: subtrair,
-    dividir: dividir,
-    multiplicar: multiplicar
+    somar,
+    subtrair,
+    dividir,
+    multiplicar
 }
 
 export default operacoes
