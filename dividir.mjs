@@ -1,5 +1,5 @@
 export default function dividir(valores){
-    let result = 1
+    let result = 1 // Iniciar com zero o resultado sempre sera zero
     try {
         valores.forEach(valor => {
             valor = Number(valor)
