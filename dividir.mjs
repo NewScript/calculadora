@@ -1,19 +1,17 @@
+const divisaoPorZero = {mensagem: 'Não é possivel divisao por zero'};
+// const ErroTipo2 = {mensagem: 'Ocorreu um erro do tipo 2'};
+// const ErroTipo3 = {mensagem: 'Ocorreu um erro do tipo 3'};
+
 export default function dividir(valores){
-    let result = 1 // Iniciar com zero o resultado sempre sera zero
-    try {
-        valores.forEach(valor => {
-            valor = Number(valor)
-            if (valor === 0) {
-                throw new RangeError("Não é possível dividir por zero.");
-            }
-            result /= valor
-        });
-    } catch (error) {
-        if (error instanceof RangeError) {
-            throw new Error(error.message);
-        } else {
-            throw new Error("Ocorreu um erro ao dividir os valores: " + error.message);
-        }
+    const firstValue = valores[0]
+    const secondValue = valores[1]
+
+    if(secondValue == 0){
+        throw new Error(divisaoPorZero.mensagem)
+        return
     }
-    return result.toFixed(10); // Return em string
+
+    return valores[0] / valores[1]
 };
+
+export {divisaoPorZero}

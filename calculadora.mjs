@@ -1,9 +1,23 @@
 import operacoes from './operacoes.mjs';
+import { divisaoPorZero} from './operacoes.mjs'
 
-let myArray = [500,5,48]
+
+let myArray = [500,0]
+
+// try {
+//     console.log(operacoes.dividir(myArray))
+// } catch (error) {
+//     console.error(error.message)
+// }
 
 try {
-    console.log(operacoes.dividir(myArray))
+    operacoes.dividir(myArray)
 } catch (error) {
-    console.error(error.message)
+    if (error.message === divisaoPorZero.mensagem) {
+        console.error(divisaoPorZero.mensagem);
+    }
 }
+
+
+
+// console.log(operacoes.dividir(myArray))
