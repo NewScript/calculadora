@@ -1,12 +1,13 @@
 export default function multiplicar(valores){
-    let result = 1 // Iniciar com zero o resultado sempre sera zero
-    try {
-        valores.forEach(valor => {
-            valor = Number(valor)
-            result *= Number(valor)
-        });
-    } catch (error) {
-        throw new Error("Ocorreu um erro ao multiplicar os valores: " + error.message);
+    const firstValue = Number(valores[0]) 
+    const secondValue = Number(valores[1])
+    if(Number.isNaN(firstValue) || Number.isNaN(secondValue) ){
+        throw new Error('Valor inválido')
+        return
     }
-    return result.toFixed(10); // Return em string
+    try {
+        return firstValue * secondValue
+    } catch (error) {
+        throw new Error('Erro ao realizar a multiplicação');
+    }
 };
