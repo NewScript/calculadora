@@ -32,21 +32,15 @@ const signalChange = document.getElementById('signalChange');
 
 let numberOfCharactersAllowed = 10;
 
-function Value() {
-    this.signal = '';
-    this.integer = '';
-    this.coma = '';
-    this.decimal = '';
-    this.toString = function () {
-        return `${this.signal}${this.integer}${this.coma}${this.decimal}`;
+const Value = {
+    signal: '',
+    integer: '',
+    coma: '',
+    decimal: '',
+    toString: function () {
+        return `${signal}${integer}${coma}${decimal}`
     }
 }
-
-// Inicializando valores essenciais do aobjeto
-Value.signal = ''
-Value.integer = ''
-Value.coma = ''
-Value.decimal = ''
 
 function maximumNumberOfCharactersAllowedReached() {
     let amountOfCharactersValueInteger = (Value.integer).toString().length;
