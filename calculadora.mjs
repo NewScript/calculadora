@@ -25,22 +25,22 @@ const operand = document.getElementsByClassName('operand');
 
 const signalChange = document.getElementById('signalChange');
 
-// const comma = document.getElementById('comma');
+const comma = document.getElementById('comma');
 
-// //--------------------------------------------------------
-// 
+//--------------------------------------------------------
 
 let numberOfCharactersAllowed = 10;
+
+let formattedNumbers = ''
 
 const Value = {
     signal: '',
     integer: '',
     comma: '',
     decimal: '',
-    toString: function () {
-        return `${this.signal}${this.integer}${this.comma}${this.decimal}`
-    }
 }
+
+//--------------------------------------------------------
 
 function clear(){
     Value.signal = ''
@@ -48,7 +48,12 @@ function clear(){
     Value.comma = ''
     Value.decimal = ''
     presentNumber()
+    viewCalculation.numberPresentation.innerText = '0';
+}
 
+function clearAll(){
+    clear();
+    viewCalculation.calculationFormulation.textContent = '0'
 }
 
 function maximumNumberOfCharactersAllowedReached() {
@@ -71,7 +76,8 @@ function presentNumber() {
     const valueTemp = addDotBackwards(Value.integer)
     viewCalculation.numberPresentation.textContent = 
         `${Value.signal}${valueTemp}${Value.comma}${Value.decimal}`;
-        console.log(`${Value.signal}${Value.integer}${Value.comma}${Value.decimal}`)
+        // console.log(`${Value.signal}${Value.integer}${Value.comma}${Value.decimal}`)
+        formattedNumbers = viewCalculation.numberPresentation.textContent
 }
 
 function includeNumber(btnClicked) {
@@ -148,14 +154,12 @@ function presentFormulation(e){
     if(viewCalculation.calculationFormulation.textContent === '0'){
         viewCalculation.calculationFormulation.textContent = '';
     }
-    if(Value.integer != 0){
-        viewCalculation.calculationFormulation.textContent += `${Value.toString()} ${e.target.textContent} `;
+    if(Value.integer != ''){
+        viewCalculation.calculationFormulation.textContent += `${formattedNumbers} ${e.target.textContent} `;
         clear();
-    }else{
-        viewCalculation.calculationFormulation.textContent = '0';
-    };
+    }
+    viewCalculation.numberPresentation.innerText = '0';
 };
-
 
 //--------------------------------------------------------
 
@@ -170,6 +174,8 @@ comma.addEventListener('click', includeComma);
 
 action.clear.addEventListener('click', clear);
 
+action.allClear.addEventListener('click', clearAll)
+
 action.backSpace.addEventListener('click', bsPresentNumber);
 
 operator.sum.addEventListener('click', presentFormulation);
@@ -181,29 +187,3 @@ operator.division.addEventListener('click', presentFormulation);
 operator.multiplication.addEventListener('click', presentFormulation);
 
 //--------------------------------------------------------
-
-
-// Value.integer = '35'
-// Value.decimal = '48'
-
-// console.log(maximumNumberOfCharactersAllowedReached())
-
-
-
-// const teste = new Value();
-
-// teste.integer = 12343
-// teste.decimal = 344
-
-
-// console.log(teste.toString())
-
-
-
-// let myArray = [500,'pp']
-
-// try {
-//     console.log(operacoes.subtrair(myArray))
-// } catch (error) {
-//     console.log(error)
-// }
