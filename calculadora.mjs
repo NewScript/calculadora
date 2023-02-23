@@ -7,19 +7,19 @@ const viewCalculation = {
     numberPresentation: document.getElementById('numberPresentation')
 };
 
-// const action = {
-//     allClear: document.getElementById('allClear'),
-//     clear: document.getElementById('clear'),
-//     backSpace: document.getElementById('backSpace')
-// };
+const action = {
+    allClear: document.getElementById('allClear'),
+    clear: document.getElementById('clear'),
+    backSpace: document.getElementById('backSpace')
+};
 
-// const operator = {
-//     sum: document.getElementById('sum'),
-//     subtraction: document.getElementById('subtraction'),
-//     division: document.getElementById('division'),
-//     multiplication: document.getElementById('multiplication'),
-//     result: document.getElementById('result')
-// };
+const operator = {
+    sum: document.getElementById('sum'),
+    subtraction: document.getElementById('subtraction'),
+    division: document.getElementById('division'),
+    multiplication: document.getElementById('multiplication'),
+    result: document.getElementById('result')
+};
 
 const operand = document.getElementsByClassName('operand');
 
@@ -35,11 +35,20 @@ let numberOfCharactersAllowed = 10;
 const Value = {
     signal: '',
     integer: '',
-    coma: '',
+    comma: '',
     decimal: '',
     toString: function () {
-        return `${signal}${integer}${coma}${decimal}`
+        return `${this.signal}${this.integer}${this.comma}${this.decimal}`
     }
+}
+
+function clear(){
+    Value.signal = ''
+    Value.integer = ''
+    Value.comma = ''
+    Value.decimal = ''
+    presentNumber()
+
 }
 
 function maximumNumberOfCharactersAllowedReached() {
@@ -61,13 +70,14 @@ function addDotBackwards(str) {
 function presentNumber() {
     const valueTemp = addDotBackwards(Value.integer)
     viewCalculation.numberPresentation.textContent = 
-        `${Value.signal}${valueTemp}${Value.coma}${Value.decimal}`;
+        `${Value.signal}${valueTemp}${Value.comma}${Value.decimal}`;
+        console.log(`${Value.signal}${Value.integer}${Value.comma}${Value.decimal}`)
 }
 
 function includeNumber(btnClicked) {
     const numberClicked = btnClicked.target.innerHTML;
     if (!maximumNumberOfCharactersAllowedReached()) {
-        if (Value.coma === '') {
+        if (Value.comma === '') {
             Value.integer = Value.integer + numberClicked
             presentNumber();
         } else {
@@ -96,12 +106,55 @@ function changeSign() {
     presentNumber();
 }
 
-function includeComa() {
-    Value.coma = ','
+function includeComma() {
+    Value.comma = ','
     presentNumber();
 };
 
+function bsPresentNumber(){
+    
+    let indexOfTheCharacterToBeDeleted = ((viewCalculation.numberPresentation.textContent).length - 1);
+    let letterToErase = viewCalculation.numberPresentation.textContent.charAt(indexOfTheCharacterToBeDeleted);
+    viewCalculation.numberPresentation.textContent = (viewCalculation.numberPresentation.textContent).slice(0, indexOfTheCharacterToBeDeleted);
+    
+    if(indexOfTheCharacterToBeDeleted === 0){
+        viewCalculation.numberPresentation.textContent = '0';
+    };
 
+    if(letterToErase != ',' || letterToErase != '-' || letterToErase != '.'){
+        bsStoreNumber();
+    }
+
+    if(letterToErase === ','){
+        Value.comma = '';
+    };
+    if(letterToErase === '-'){
+        Value.signal = '';
+    };
+
+};
+
+function bsStoreNumber(){
+    if(Value.comma){
+        Value.decimal = Value.decimal.slice(0, Value.decimal.length - 1);
+        // console.log('Decimal = ' + $strDecimal + ' - ' + $strDecimal.length);
+    }else{
+        Value.integer = Value.integer.slice(0, Value.integer.length - 1);
+        // console.log('Integer = ' + $strInteger + ' - ' + $strInteger.length);
+    };
+};
+
+function presentFormulation(e){
+    if(viewCalculation.calculationFormulation.textContent === '0'){
+        viewCalculation.calculationFormulation.textContent = '';
+    }
+    if(Value.integer != 0){
+        viewCalculation.calculationFormulation.textContent += `${Value.toString()} ${e.target.textContent} `;
+        clear();
+    }else{
+        viewCalculation.calculationFormulation.textContent = '0';
+    };
+};
 
 
 //--------------------------------------------------------
@@ -113,7 +166,19 @@ for (const iterator of operand) {
 
 signalChange.addEventListener('click', changeSign);
 
-comma.addEventListener('click', includeComa);
+comma.addEventListener('click', includeComma);
+
+action.clear.addEventListener('click', clear);
+
+action.backSpace.addEventListener('click', bsPresentNumber);
+
+operator.sum.addEventListener('click', presentFormulation);
+
+operator.subtraction.addEventListener('click', presentFormulation);
+
+operator.division.addEventListener('click', presentFormulation);
+
+operator.multiplication.addEventListener('click', presentFormulation);
 
 //--------------------------------------------------------
 
