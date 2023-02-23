@@ -33,14 +33,22 @@ let numberOfCharactersAllowed = 10;
 
 let formattedNumbers = ''
 
+const values = []
+
 const Value = {
     signal: '',
     integer: '',
     comma: '',
     decimal: '',
+    operator: ''
 }
 
 //--------------------------------------------------------
+
+function storeValues(){
+    values.push(formattedNumbers)
+    console.log(values)
+}
 
 function clear(){
     Value.signal = ''
@@ -156,6 +164,7 @@ function presentFormulation(e){
     }
     if(Value.integer != ''){
         viewCalculation.calculationFormulation.textContent += `${formattedNumbers} ${e.target.textContent} `;
+        storeValues()
         clear();
     }
     viewCalculation.numberPresentation.innerText = '0';
